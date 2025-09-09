@@ -14,4 +14,6 @@ def precio_iva(precio, iva):
     
     return iva / precio
 
-print(f"El producto seleccionado: {producto}, originalmente tiene el precio de: {precio}, su iva es de: {precio_iva(precio, iva)}, y en total tendriamos que pagar {precio_iva(precio, iva) + precio} pesos.")
+print(f"El producto seleccionado: {producto}, originalmente tiene el precio de: {precio}")
+print(f" su iva es de: {precio_iva(precio, iva)},") 
+print(f" y en total tendriamos que pagar {precio_iva(precio, iva) + precio} pesos.")
