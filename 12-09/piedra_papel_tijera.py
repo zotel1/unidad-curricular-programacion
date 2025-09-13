@@ -6,8 +6,8 @@ robot = random.choice(lista)
 piedra = "piedra"
 papel = "papel"
 tijera = "tijera"
-mensaje = print(f"La computadora eligio {robot}")
-print(mensaje)
+print(f"La computadora eligio {robot}")
+
 if (humano== tijera and robot == papel):
     print("Gana humano")
 elif (humano == papel and robot == piedra):

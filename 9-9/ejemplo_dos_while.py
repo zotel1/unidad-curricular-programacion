@@ -18,12 +18,12 @@ while(usuario == "s"):
     if(usuario == "s"):
         producto = str(input("Ingrese el producto a consultar: "))
         precio = int(input("Ingrese el precio del producto: "))
-        iva =  precio / 100 * 21 
+        iva =  (precio * 21 )/ 100 
         
         def precio_iva(precio, iva):
             return precio + iva 
         
-        precio_total = precio_iva(precio, iva) + precio
+        precio_total = precio_iva(precio, iva)
         
         print(f"El producto seleccionado: {producto}, originalmente tiene el precio de: {precio}")
         print(f" su iva es de: {precio_iva(precio, iva)},") 
