@@ -2,6 +2,8 @@
 #la funcion debe recibir la cantidad sin iva y el porcentaje de iva a aplicar
 # y devolver el total de la factura
 
+## A revisar
+
 usuario = "s"
 total_compra = 0
 total_sin_iva = 0
@@ -16,10 +18,10 @@ while(usuario == "s"):
     if(usuario == "s"):
         producto = str(input("Ingrese el producto a consultar: "))
         precio = int(input("Ingrese el precio del producto: "))
-        iva = (precio * 21)
+        iva =  precio / 100 * 21 
         
         def precio_iva(precio, iva):
-            return iva / precio
+            return precio + iva 
         
         precio_total = precio_iva(precio, iva) + precio
         
