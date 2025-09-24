@@ -1,4 +1,4 @@
-def multiplicacion():
+def multiplicacion()->int:
     """
     Esta función pide al usuario que ingrese un numero a, 
     despues pide que ingrese un numero b y los multimplica
@@ -7,7 +7,7 @@ def multiplicacion():
     numero_b = int(input("Ingrese el numero b: "))
     return numero_a * numero_b
 
-def division():
+def division()->float:
     """
     Esta función pide al usuario que ingrese un numero a, 
     despues pide que ingrese un numero b y los y divide a entre b
@@ -17,7 +17,7 @@ def division():
     return numero_a / numero_b
 
 
-def suma():
+def suma()->int:
     """
     Esta función pide al usuario que ingrese un numero a
     y despues un numero b y suma a con b
@@ -26,7 +26,7 @@ def suma():
     numero_b = int(input("Ingrese el numero b: "))
     return numero_a + numero_b
 
-def resta():
+def resta()->int:
     """
     Esta función pide al usuario que ingrese un numero a
     y despues un numero b y resta a con b
