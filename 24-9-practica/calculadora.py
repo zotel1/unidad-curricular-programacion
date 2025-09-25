@@ -1,11 +1,25 @@
-def multiplicacion()->int:
+
+def ingreso_usuario()->list:
+    numero_a = int(input("Ingrese el numero a: "))
+    numero_b = int(input("Ingrese el numero b: "))
+    return [numero_a, numero_b]
+
+def multiplicacion(ingreso_usuario:list)->int:
     """
     Esta función pide al usuario que ingrese un numero a, 
     despues pide que ingrese un numero b y los multimplica
+
+    Desempaquetamos la funcion y realizamos la operación matemática
+    x, y = ingreso_usuario()
+    return x * y
     """
-    numero_a = int(input("Ingrese el numero a: "))
-    numero_b = int(input("Ingrese el numero b: "))
-    return numero_a * numero_b
+    x, y = ingreso_usuario()
+    try:
+        (x,y == float)
+        print("Debe ingresar un número entero!")
+    except:
+        resultado = x * y
+    return resultado
 
 def division()->float:
     """
@@ -57,7 +71,7 @@ while(opcion != 0):
         print(f"el resultado de tu resta es: {resta()}")
     elif(opcion == 3):
         print("¡Elejiste multiplicar!")
-        print(f"el resultado de tu multiplicación es: {multiplicacion()}")
+        print(f"el resultado de tu multiplicación es: {multiplicacion(ingreso_usuario)}")
     elif(opcion == 4):
         print("¡Elejiste division!")
         print(f"el resultado de tu multiplicación es: {division()}")
