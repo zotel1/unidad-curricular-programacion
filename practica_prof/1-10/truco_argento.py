@@ -22,79 +22,110 @@ jerarquia = {
     (4, None): 1
 }
 
-def fuerza(carta):
-    num, palo = carta
-    # Reglas especiales
-    if (num, palo) in jerarquia:
-        return jerarquia[(num, palo)]
-    elif (num, None) in jerarquia:
-        return jerarquia[(num, None)]
-    else:
-        return 0
-
-def crear_mazo():
-    return [(n, p) for n in numeros for p in palos]
-
-def mostrar_mano(mano):
-    for i, (n,p) in enumerate(mano, 1):
-        print(f"{i}. {n} de {p}")
-
 #Contadores
 puntos_usuario_total = 0
 puntos_cpu_total = 0
 cantidad_de_manos = 0
 
-
-# def crear_mano():
- #   for i in range(0,cantidad_de_manos):
-  #      mazo = crear_mazo()
-   #     random.shuffle(mazo)
-
-
-def jugar():
-    puntos_usuario = 0
-    puntos_cpu = 0
-    mazo = crear_mazo()
-    random.shuffle(mazo)
-    #mazo = crear_mano()
-
-    mano_jugador = mazo[:3]
-    mano_cpu = mazo[3:6]
-
-    print("Tus cartas son:")
-    mostrar_mano(mano_jugador)
-
-    # jugador elige carta
-    eleccion = int(input("Elige una carta (1-3): ")) - 1
-    carta_jugador = mano_jugador[eleccion]
-    print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
-
-    # CPU juega aleatoria
-    carta_cpu = random.choice(mano_cpu)
-    print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
-
-    # Comparar fuerza
-    if fuerza(carta_jugador) > fuerza(carta_cpu):
-        puntos_usuario += 1 
-        print("¡Ganaste la baza! ")
-    elif fuerza(carta_jugador) < fuerza(carta_cpu):
-        puntos_cpu += 1
-        print("La computadora ganó la baza ")
-    else:
-        print("Empate ")
-    return (puntos_usuario, puntos_cpu)
-
-u, c = jugar()
-puntos_usuario_total += u
-puntos_cpu_total += c
-
-#jugar ()
-
 juego = str(input("Queres jugar al truco?: [s/n] "))
-
 while(juego == "s"):
     while(puntos_usuario_total or puntos_cpu_total != 15):
-        jugar()
+        def fuerza(carta):
+            num, palo = carta
+            # Reglas especiales
+            if (num, palo) in jerarquia:
+                return jerarquia[(num, palo)]
+            elif (num, None) in jerarquia:
+                return jerarquia[(num, None)]
+            else:
+                return 0
+            
+        print(f"LA carta mas alta es {fuerza((1,'Espada'))}")
 
+        def crear_mazo():
+            return [(n, p) for n in numeros for p in palos]
+        print("creamos el mazo",crear_mazo())
+
+
+        def mostrar_mano(mano):
+            for i, (n,p) in enumerate(mano, 1):
+                print(f"{i}. {n} de {p}")
+            return mano
+        print("mostramos la mano",mostrar_mano([(1,"Espada"),(3,"Copa"),(12,"Oro")]))
+            
+
+
+        def crear_mano():
+            mazo = crear_mazo()
+            random.shuffle(mazo)
+
+            mano_jugador = mazo[:3]
+            mano_cpu = mazo[3:6]
+            print("La cpu saco",mano_cpu)
+
+            print("Tus cartas son:")
+            mostrar_mano(mano_jugador)
+
+            eleccion = int(input("Elige una carta (1-3): ")) - 1
+            carta_jugador = mano_jugador[eleccion]
+            print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
+
+                # CPU juega aleatoria
+            carta_cpu = random.choice(mano_cpu)
+            print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
+            return (carta_cpu, carta_jugador)
+
+        cp, jug = crear_mano()
+
+
+        def jugar():
+            puntos_usuario = 0
+            puntos_cpu = 0
+                #mazo = crear_mazo()
+                #random.shuffle(mazo)
+                #mazo = crear_mano()
+
+                #mano_jugador = mazo[:3]
+                #mano_cpu = mazo[3:6]
+
+                #print("Tus cartas son:")
+                #mostrar_mano(mano_jugador)
+
+                # jugador elige carta
+                #eleccion = int(input("Elige una carta (1-3): ")) - 1
+                #carta_jugador = mano_jugador[eleccion]
+                #print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
+
+                # CPU juega aleatoria
+                #carta_cpu = random.choice(mano_cpu)
+                #print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
+            carta_jugador = jug
+            carta_cpu = cp
+
+                # Comparar fuerza
+            if fuerza(carta_jugador) > fuerza(carta_cpu):
+                 puntos_usuario += 1 
+                 print("¡Ganaste la baza! ")
+            elif fuerza(carta_jugador) < fuerza(carta_cpu):
+                puntos_cpu += 1
+                print("La computadora ganó la baza ")
+            else:
+                print("Empate ")
+            return (puntos_usuario, puntos_cpu)
+        u, c = jugar()
+        puntos_usuario_total += u
+        puntos_cpu_total += c
+
+            #jugar ()
+
+# def main():
+  #  juego = str(input("Queres jugar al truco?: [s/n] "))
+   # while(juego == "s"):
+    #    while(puntos_usuario_total or puntos_cpu_total != 15):
+     #       fuerza()
+      #      jugar()
+
+
+#main()
 
 
