@@ -1,5 +1,9 @@
 import random
 
+"""
+Conclusion del trabajo, el metodo shuflle, reorganiza d emanera aleatoria el diccionario, despues el usuario puede elegir entre uno de los primeros 3 elementos de la nueva lista reorganizada, y la maquina elige uno de los 3 siguientes elementos de la lista
+"""
+
 # Baraja española (solo números, sin 8 ni 9)
 palos = ["Espada", "Basto", "Oro", "Copa"]
 numeros = [1,2,3,4,5,6,7,10,11,12]
