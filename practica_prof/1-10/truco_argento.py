@@ -87,25 +87,36 @@ while(juego == "s"):
         """
 
         def carta_uno():
+            """
+            carta = random.choice(list(jerarquia.keys()))
+            numero, palo = carta
+
+            if palo is None:
+                primera = f"Primera carta [{numero}]"
+            else:
+                primera = f"Primera carta [{numero} de {palo}]"
+            return primera
+
+            """
             mazo = crear_mazo()
             carta = random.choice(mazo)
             resultado = [carta[0], carta[1]]
-
-            return f"Primera carta [{resultado[0]} de {resultado[1]}]"
+            #primera = f"Primera carta [{resultado[0]} de {resultado[1]}]"
+            return resultado
         
         def carta_dos():
             mazo = crear_mazo()
             carta = random.choice(mazo)
             resultado = [carta[0], carta[1]]
-
-            return f"Segunda carta [{resultado[0]} de {resultado[1]}]"
+            #segunda = f"Segunda carta [{resultado[0]} de {resultado[1]}]"
+            return resultado
         
         def carta_tres():
             mazo = crear_mazo()
             carta = random.choice(mazo)
             resultado = [carta[0], carta[1]]
-
-            return f"Tercera carta [{resultado[0]} de {resultado[1]}]"
+            #tercera = f"Tercera carta [{resultado[0]} de {resultado[1]}]"
+            return resultado
         
         
         
@@ -113,28 +124,39 @@ while(juego == "s"):
             
             #random.shuffle(mazo)
 
-            mano_jugador = [f'{carta_uno()}, {carta_dos()},  {carta_tres()}']
+            mano_jugador = [carta_uno(), carta_dos(), carta_tres()]
             #mano_jugador = random.choice(mazo[:15])
-            mano_cpu = [f'{carta_uno()}, {carta_dos()}, {carta_tres()}']
+            mano_cpu = [carta_uno(), carta_dos(), carta_tres()]
             print("La cpu saco",mano_cpu)
 
             print("Tus cartas son: ", mano_jugador)
         
+            carta_cpu = random.choices(mano_cpu)
+            #print(random.choices(carta_cpu))
+            #print("La computadora jugó:", mano_cpu, "de", mano_cpu)
+            print(f"La computadora eligio {(carta_cpu)}")
+            #carta_jugador = mano_jugador
+            #carta_cpu = mano_cpu
 
-            #eleccion = int(input("Elige una carta (1-3): ")) - 1
-            #carta_jugador = mano_jugador[eleccion]
-            #print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
 
+            eleccion = int(input("Elige una carta (1-3): ")) - 1
+            carta_jugador = mano_jugador[eleccion]
+            print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
+
+            
                 # CPU juega aleatoria
             #carta_cpu = random.choice(mano_cpu)
             #print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
-            return [mano_cpu, mano_jugador]
+            return [carta_cpu, carta_jugador]
 
-        mano_cpu, mano_jugador = crear_mano()
+        cartas = crear_mano()
     
 
 
+
         def jugar():
+            carta_cpu, carta_jugador= cartas
+            
             puntos_usuario = 0
             puntos_cpu = 0
                 #mazo = crear_mazo()
@@ -156,12 +178,9 @@ while(juego == "s"):
                 #carta_cpu = random.choice(mano_cpu)
                 #print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
             #CPU juega aleatoria
-            todas_las_cartas = [carta for palo in mano_cpu for carta in palo]
-            carta_cpu = random.choice(mano_cpu)
-            #print("La computadora jugó:", mano_cpu, "de", mano_cpu)
-            print(f"La computadora jugo {carta_cpu}")
-            carta_jugador = mano_jugador
-            carta_cpu = mano_cpu
+            #todas_las_cartas = [carta for palo in mano_cpu for carta in palo]
+
+            
 
                 # Comparar fuerza
             if fuerza(carta_jugador) > fuerza(carta_cpu):
@@ -172,7 +191,7 @@ while(juego == "s"):
                 print("La computadora ganó la baza ")
             else:
                 print("Empate ")
-            return (puntos_usuario, puntos_cpu)
+            return [puntos_usuario, puntos_cpu]
         puntos_usuario, puntos_cpu = jugar()
         puntos_usuario_total += puntos_usuario
         puntos_cpu_total += puntos_cpu
