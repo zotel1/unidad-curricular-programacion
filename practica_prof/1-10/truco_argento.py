@@ -1,7 +1,11 @@
 import random
 
 """
-Conclusion del trabajo, el metodo shuflle, reorganiza d emanera aleatoria el diccionario, despues el usuario puede elegir entre uno de los primeros 3 elementos de la nueva lista reorganizada, y la maquina elige uno de los 3 siguientes elementos de la lista
+Conclusion del trabajo, el metodo shuflle, 
+reorganiza d emanera aleatoria el diccionario, 
+despues el usuario puede elegir entre uno de los 
+primeros 3 elementos de la nueva lista reorganizada, 
+y la maquina elige uno de los 3 siguientes elementos de la lista
 """
 
 # Baraja española (solo números, sin 8 ni 9)
@@ -10,13 +14,13 @@ numeros = [1,2,3,4,5,6,7,10,11,12]
 
 # Jerarquía simplificada del Truco argentino
 jerarquia = {
-    (1, "Espada"): 14,
-    (1, "Basto"): 13,
-    (7, "Espada"): 12,
-    (7, "Oro"): 11,
+    (1, "Espada ⚔️"): 14,
+    (1, "Basto 🪵"): 13,
+    (7, "Espada ⚔️"): 12,
+    (7, "Oro 🪙"): 11,
     (3, None): 10,
     (2, None): 9,
-    (1, None): 8,
+    (1, "Copa 🍷"): 8,
     (12, None): 7,
     (11, None): 6,
     (10, None): 5,
@@ -44,22 +48,21 @@ while(juego == "s"):
             else:
                 return 0
             
-        print(f"LA carta mas alta es {fuerza((1,'Espada'))}")
+        #print(f"LA carta mas alta es {fuerza((1,'Espada'))}")
 
         def crear_mazo():
             return [(n, p) for n in numeros for p in palos]
-        print("creamos el mazo",crear_mazo())
+        #print("creamos el mazo",crear_mazo())
 
 
         def mostrar_mano(mano):
             for i, (n,p) in enumerate(mano, 1):
                 print(f"{i}. {n} de {p}")
             return mano
-        print("mostramos la mano",mostrar_mano([(1,"Espada"),(3,"Copa"),(12,"Oro")]))
-            
+        #print("mostramos la mano",mostrar_mano([(1,"Espada"),(3,"Copa"),(12,"Oro")]))
+          
 
-
-        def crear_mano():
+        """def crear_mano():
             mazo = crear_mazo()
             random.shuffle(mazo)
 
@@ -80,6 +83,55 @@ while(juego == "s"):
             return (carta_cpu, carta_jugador)
 
         cp, jug = crear_mano()
+
+        """
+
+        def carta_uno():
+            mazo = crear_mazo()
+            carta = random.choice(mazo)
+            resultado = [carta[0], carta[1]]
+
+            return f"Primera carta [{resultado[0]} de {resultado[1]}]"
+        
+        def carta_dos():
+            mazo = crear_mazo()
+            carta = random.choice(mazo)
+            resultado = [carta[0], carta[1]]
+
+            return f"Segunda carta [{resultado[0]} de {resultado[1]}]"
+        
+        def carta_tres():
+            mazo = crear_mazo()
+            carta = random.choice(mazo)
+            resultado = [carta[0], carta[1]]
+
+            return f"Tercera carta [{resultado[0]} de {resultado[1]}]"
+        
+        
+        
+        def crear_mano():
+            
+            #random.shuffle(mazo)
+
+            mano_jugador = [f'{carta_uno()}, {carta_dos()},  {carta_tres()}']
+            #mano_jugador = random.choice(mazo[:15])
+            mano_cpu = [f'{carta_uno()}, {carta_dos()}, {carta_tres()}']
+            print("La cpu saco",mano_cpu)
+
+            print("Tus cartas son: ", mano_jugador)
+        
+
+            #eleccion = int(input("Elige una carta (1-3): ")) - 1
+            #carta_jugador = mano_jugador[eleccion]
+            #print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
+
+                # CPU juega aleatoria
+            #carta_cpu = random.choice(mano_cpu)
+            #print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
+            return [mano_cpu, mano_jugador]
+
+        mano_cpu, mano_jugador = crear_mano()
+    
 
 
         def jugar():
@@ -103,8 +155,13 @@ while(juego == "s"):
                 # CPU juega aleatoria
                 #carta_cpu = random.choice(mano_cpu)
                 #print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
-            carta_jugador = jug
-            carta_cpu = cp
+            #CPU juega aleatoria
+            todas_las_cartas = [carta for palo in mano_cpu for carta in palo]
+            carta_cpu = random.choice(mano_cpu)
+            #print("La computadora jugó:", mano_cpu, "de", mano_cpu)
+            print(f"La computadora jugo {carta_cpu}")
+            carta_jugador = mano_jugador
+            carta_cpu = mano_cpu
 
                 # Comparar fuerza
             if fuerza(carta_jugador) > fuerza(carta_cpu):
@@ -116,9 +173,9 @@ while(juego == "s"):
             else:
                 print("Empate ")
             return (puntos_usuario, puntos_cpu)
-        u, c = jugar()
-        puntos_usuario_total += u
-        puntos_cpu_total += c
+        puntos_usuario, puntos_cpu = jugar()
+        puntos_usuario_total += puntos_usuario
+        puntos_cpu_total += puntos_cpu
 
             #jugar ()
 
