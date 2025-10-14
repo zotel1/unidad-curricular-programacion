@@ -59,34 +59,8 @@ while(juego == "s"):
             for i, (n,p) in enumerate(mano, 1):
                 print(f"{i}. {n} de {p}")
             return mano
-        #print("mostramos la mano",mostrar_mano([(1,"Espada"),(3,"Copa"),(12,"Oro")]))
-          
 
-        """def crear_mano():
-            mazo = crear_mazo()
-            random.shuffle(mazo)
-
-            mano_jugador = mazo[:3]
-            mano_cpu = mazo[3:6]
-            print("La cpu saco",mano_cpu)
-
-            print("Tus cartas son:")
-            mostrar_mano(mano_jugador)
-
-            eleccion = int(input("Elige una carta (1-3): ")) - 1
-            carta_jugador = mano_jugador[eleccion]
-            print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
-
-                # CPU juega aleatoria
-            carta_cpu = random.choice(mano_cpu)
-            print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
-            return (carta_cpu, carta_jugador)
-
-        cp, jug = crear_mano()
-
-        """
-
-        def carta_uno():
+        def carta_manos():
             """
             carta = random.choice(list(jerarquia.keys()))
             numero, palo = carta
@@ -99,48 +73,35 @@ while(juego == "s"):
 
             """
             mazo = crear_mazo()
-            carta = random.choice(mazo)
-            resultado = [carta[0], carta[1]]
+            carta_uno = random.choice(mazo)
+            carta_dos = random.choice(mazo)
+            carta_tres = random.choice(mazo)
+            
+            resultado = {carta_uno[0]: carta_uno[1], carta_dos[0]: carta_dos[1],carta_tres[0]: carta_tres[1]}
             #primera = f"Primera carta [{resultado[0]} de {resultado[1]}]"
             return resultado
         
-        def carta_dos():
-            mazo = crear_mazo()
-            carta = random.choice(mazo)
-            resultado = [carta[0], carta[1]]
-            #segunda = f"Segunda carta [{resultado[0]} de {resultado[1]}]"
-            return resultado
-        
-        def carta_tres():
-            mazo = crear_mazo()
-            carta = random.choice(mazo)
-            resultado = [carta[0], carta[1]]
-            #tercera = f"Tercera carta [{resultado[0]} de {resultado[1]}]"
-            return resultado
-        
-        
-        
-        def crear_mano():
+        def crear_mano()->list:
             
             #random.shuffle(mazo)
 
-            mano_jugador = [carta_uno(), carta_dos(), carta_tres()]
+            mano_jugador = carta_manos()
             #mano_jugador = random.choice(mazo[:15])
-            mano_cpu = [carta_uno(), carta_dos(), carta_tres()]
+            mano_cpu = carta_manos()
             print("La cpu saco",mano_cpu)
 
             print("Tus cartas son: ", mano_jugador)
         
-            carta_cpu = random.choices(mano_cpu)
+            carta_cpu = random.choices(mano_cpu).__dict__
             #print(random.choices(carta_cpu))
             #print("La computadora jugó:", mano_cpu, "de", mano_cpu)
-            print(f"La computadora eligio {(carta_cpu)}")
+            print(f"La computadora eligio {carta_cpu}")
             #carta_jugador = mano_jugador
             #carta_cpu = mano_cpu
 
 
             eleccion = int(input("Elige una carta (1-3): ")) - 1
-            carta_jugador = mano_jugador[eleccion]
+            carta_jugador = mano_jugador[eleccion].__dict__
             print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
 
             
@@ -149,13 +110,13 @@ while(juego == "s"):
             #print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
             return [carta_cpu, carta_jugador]
 
-        cartas = crear_mano()
-    
-
+        print(crear_mano())
 
 
         def jugar():
-            carta_cpu, carta_jugador= cartas
+            print()
+            carta_cpu = crear_mano().index(0)
+            carta_jugador = crear_mano().index(1)
             
             puntos_usuario = 0
             puntos_cpu = 0
@@ -191,7 +152,8 @@ while(juego == "s"):
                 print("La computadora ganó la baza ")
             else:
                 print("Empate ")
-            return [puntos_usuario, puntos_cpu]
+            return (puntos_usuario, puntos_cpu)
+        
         puntos_usuario, puntos_cpu = jugar()
         puntos_usuario_total += puntos_usuario
         puntos_cpu_total += puntos_cpu
