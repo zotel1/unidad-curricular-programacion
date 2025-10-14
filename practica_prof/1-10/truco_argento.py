@@ -7,7 +7,7 @@ despues el usuario puede elegir entre uno de los
 primeros 3 elementos de la nueva lista reorganizada, 
 y la maquina elige uno de los 3 siguientes elementos de la lista
 """
-
+"""
 # Baraja española (solo números, sin 8 ni 9)
 palos = ["Espada", "Basto", "Oro", "Copa"]
 numeros = [1,2,3,4,5,6,7,10,11,12]
@@ -61,7 +61,7 @@ while(juego == "s"):
             return mano
 
         def carta_manos():
-            """
+            
             carta = random.choice(list(jerarquia.keys()))
             numero, palo = carta
 
@@ -71,7 +71,7 @@ while(juego == "s"):
                 primera = f"Primera carta [{numero} de {palo}]"
             return primera
 
-            """
+            
             mazo = crear_mazo()
             carta_uno = random.choice(mazo)
             carta_dos = random.choice(mazo)
@@ -171,3 +171,142 @@ while(juego == "s"):
 #main()
 
 
+"""
+
+
+# Baraja española (solo números, sin 8 ni 9)
+palos = ["Espada", "Basto", "Oro", "Copa"]
+numeros = [1,2,3,4,5,6,7,10,11,12]
+
+# Jerarquía simplificada del Truco argentino
+jerarquia = {
+    (1, "Espada"): 14,
+    (1, "Basto"): 13,
+    (7, "Espada"): 12,
+    (7, "Oro"): 11,
+    (3, "Espada"): 10, 
+    (3, "Basto"): 310, 
+    (3, "Oro"): 10, 
+    (3, "Copa"): 10,
+    (2, "Espada"): 9, 
+    (2, "Basto"): 9, 
+    (2, "Oro"): 9, 
+    (2, "Copa"): 9,
+    (1, "Oro"): 8,
+    (1, "Copa"): 8,
+    (12,"Espada"): 7,
+    (12,"Basto"): 7,
+    (12,"Oro"): 7,
+    (12,"Copa"): 7,
+    (11,"Espada"): 6,
+    (11,"Basto"): 6,
+    (11,"Oro"): 6,
+    (11,"Copa"): 6,
+    (10,"Espada"): 5,
+    (10,"Basto"): 5,
+    (10,"Oro"): 5,
+    (10,"Copa"): 5,
+    (7, "Basto"): 4,
+    (7, "Copa"): 4,
+    (6,"Espada"): 3,
+    (6,"Basto"): 3,
+    (6,"Oro",): 3,
+    (6,"Copa"): 3,
+    (5,"Espada"): 2,
+    (5,"Basto"): 2,
+    (5,"Oro"): 2,
+    (5,"Copa"): 2,
+    (4,"Espada"): 1,
+    (4,"Basto"): 1,
+    (4,"Oro"): 1,
+    (4,"Copa"): 1
+}
+
+def fuerza(carta):
+    num, palo = carta
+    # Reglas especiales
+    if (num, palo) in jerarquia:
+        return jerarquia[(num, palo)]
+    elif (num, None) in jerarquia:
+        return jerarquia[(num, None)]
+    else:
+        return 0
+
+def crear_mazo():
+    return [(n, p) for n in numeros for p in palos]
+
+def mostrar_mano(mano):
+    for i, (n,p) in enumerate(mano, 1):
+        print(f"{i}. {n} de {p}")
+
+def manos_cartas():
+    mazo = crear_mazo()
+    carta_uno = random.choices(mazo)
+    mazo.pop(random.randint(0, len(mazo) - 1))
+    #mazo.remove(carta_uno)
+    carta_dos = random.choices(mazo)
+    #mazo.remove(carta_dos)
+    mazo.pop(random.randint(0, len(mazo) - 1))
+    carta_tres = random.choices(mazo)
+    #mazo.remove(carta_tres)
+    mazo.pop(random.randint(0, len(mazo) - 1))
+    mano_jugador = carta_uno, carta_dos, carta_tres
+    carta_uno = random.choices(mazo)
+    mazo.pop(random.randint(0, len(mazo) - 1))
+    #mazo.remove(carta_uno)
+    carta_dos = random.choices(mazo)
+    #mazo.remove(carta_dos)
+    mazo.pop(random.randint(0, len(mazo) - 1))
+    carta_tres = random.choices(mazo)
+    #mazo.remove(carta_tres)
+    mazo.pop(random.randint(0, len(mazo) - 1))
+    mano_cpu = carta_uno, carta_dos, carta_tres
+
+    print(mazo)
+    return mano_jugador, mano_cpu
+
+mano_jugador, mano_cpu = manos_cartas()
+#print("Mano humano sin descomprimir",mano_jugador)
+#print("Mano cpu sin decomprimir",mano_cpu)
+lista_tuplas_jug = [tupla for lista in mano_jugador for tupla in lista]
+lista_tuplas_cpu = [tupla for lista in mano_cpu for tupla in lista]
+#print(lista_tuplas_jug)
+#print(lista_tuplas_cpu)
+
+def manos():
+    
+    mano_jugador = lista_tuplas_jug
+    mano_cpu = lista_tuplas_cpu
+
+    print("A la computadora le tocaron las siguientes cartas: ")
+    mostrar_mano(mano_cpu)
+    print("A vos te tocaron las siguientes cartas: ")
+    mostrar_mano(mano_jugador)
+
+
+    # CPU juega aleatoria
+    carta_cpu = random.choice(mano_cpu)
+    print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
+
+    # jugador elige carta
+    eleccion = int(input("Elige una carta (1-3): ")) - 1
+    carta_jugador = mano_jugador[eleccion]
+    print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
+
+    return (carta_jugador, carta_cpu)
+
+def jugar():
+
+    
+
+    carta_jugador, carta_cpu = manos()
+    
+    # Comparar fuerza
+    if fuerza(carta_jugador) > fuerza(carta_cpu):
+        print("¡Ganaste la baza! ")
+    elif fuerza(carta_jugador) < fuerza(carta_cpu):
+        print("La computadora ganó la baza ")
+    else:
+        print("Empate ")
+
+jugar()
