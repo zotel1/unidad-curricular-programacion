@@ -222,6 +222,12 @@ jerarquia = {
     (4,"Copa"): 1
 }
 
+
+#Contadores
+puntos_usuario_total = 0
+puntos_cpu_total = 0
+cantidad_de_manos = 0
+
 def fuerza(carta):
     num, palo = carta
     # Reglas especiales
@@ -287,26 +293,63 @@ def manos():
     # CPU juega aleatoria
     carta_cpu = random.choice(mano_cpu)
     print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
+    mano_cpu.pop(random.randint(0, len(mano_cpu) - 1))
 
     # jugador elige carta
     eleccion = int(input("Elige una carta (1-3): ")) - 1
     carta_jugador = mano_jugador[eleccion]
     print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
+    mano_jugador.pop(random.randint(0, len(mano_cpu) - 1))
+
 
     return (carta_jugador, carta_cpu)
 
 def jugar():
 
+    puntos_usuario = 0
+    puntos_cpu = 0
+
     
 
     carta_jugador, carta_cpu = manos()
     
-    # Comparar fuerza
-    if fuerza(carta_jugador) > fuerza(carta_cpu):
-        print("¡Ganaste la baza! ")
-    elif fuerza(carta_jugador) < fuerza(carta_cpu):
-        print("La computadora ganó la baza ")
-    else:
-        print("Empate ")
+    while(carta_jugador != 0 and carta_cpu != 0 ):
+        # Comparar fuerza
+        if fuerza(carta_jugador) > fuerza(carta_cpu):
+            puntos_usuario += 1 
+            print("¡Ganaste la baza! ")
+            
+        elif fuerza(carta_jugador) < fuerza(carta_cpu):
+            puntos_cpu += 1
+            print("La computadora ganó la baza ")
+            
+        else:
+            print("Empate ")
+        break
 
-jugar()
+    return (puntos_usuario, puntos_cpu)
+
+puntos_usuario, puntos_cpu = jugar()
+puntos_usuario_total += puntos_usuario
+puntos_cpu_total += puntos_cpu
+
+#jugar()
+
+def main():
+    queres_jugar = str(input("Queres jugar al truco? [s/n]: "))
+    while(queres_jugar == "s"):
+        cuantos_puntos = int(input("¿Cuantos puntos por mano? [15 o 30]: "))
+        if(cuantos_puntos < 16):
+            while(puntos_usuario_total or puntos_cpu_total < 16):
+                jugar()
+        elif(cuantos_puntos < 31):
+            while(puntos_usuario_total or puntos_cpu_total < 31):
+                jugar()
+
+
+
+
+
+
+if __name__ == '__main__':
+    main()
