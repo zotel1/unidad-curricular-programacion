@@ -248,25 +248,27 @@ def mostrar_mano(mano):
 def manos_cartas():
     mazo = crear_mazo()
     carta_uno = random.choices(mazo)
-    mazo.pop(random.randint(0, len(mazo) - 1))
+    mazo.pop(random.randint(0, len(carta_uno) - 1))
     #mazo.remove(carta_uno)
     carta_dos = random.choices(mazo)
     #mazo.remove(carta_dos)
-    mazo.pop(random.randint(0, len(mazo) - 1))
+    mazo.pop(random.randint(0, len(carta_dos) - 1))
     carta_tres = random.choices(mazo)
     #mazo.remove(carta_tres)
-    mazo.pop(random.randint(0, len(mazo) - 1))
+    mazo.pop(random.randint(0, len(carta_tres) - 1))
+
     mano_jugador = carta_uno, carta_dos, carta_tres
-    carta_uno = random.choices(mazo)
+
+    carta_uno_cpu = random.choices(mazo)
     mazo.pop(random.randint(0, len(mazo) - 1))
     #mazo.remove(carta_uno)
-    carta_dos = random.choices(mazo)
+    carta_dos_cpu = random.choices(mazo)
     #mazo.remove(carta_dos)
     mazo.pop(random.randint(0, len(mazo) - 1))
-    carta_tres = random.choices(mazo)
+    carta_tres_cpu = random.choices(mazo)
     #mazo.remove(carta_tres)
     mazo.pop(random.randint(0, len(mazo) - 1))
-    mano_cpu = carta_uno, carta_dos, carta_tres
+    mano_cpu = carta_uno_cpu, carta_dos_cpu, carta_tres_cpu
 
     print(mazo)
     return mano_jugador, mano_cpu
@@ -333,8 +335,11 @@ puntos_usuario, puntos_cpu = jugar()
 puntos_usuario_total += puntos_usuario
 puntos_cpu_total += puntos_cpu
 
-#jugar()
+print("Vas sumando: ", puntos_usuario_total)
+print("La computadora va sumando: ", puntos_cpu_total)
 
+jugar()
+"""
 def main():
     queres_jugar = str(input("Queres jugar al truco? [s/n]: "))
     while(queres_jugar == "s"):
@@ -352,4 +357,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main()"""
