@@ -239,7 +239,7 @@ def fuerza(carta):
         return 0
 
 def crear_mazo():
-    return [(n, p) for n in numeros for p in palos]
+    return [[n, p] for n in numeros for p in palos]
 
 def mostrar_mano(mano):
     for i, (n,p) in enumerate(mano, 1):
@@ -247,39 +247,79 @@ def mostrar_mano(mano):
 
 def manos_cartas():
     mazo = crear_mazo()
-    carta_uno = random.choices(mazo)
-    mazo.pop(random.randint(0, len(carta_uno) - 1))
-    #mazo.remove(carta_uno)
-    carta_dos = random.choices(mazo)
-    #mazo.remove(carta_dos)
-    mazo.pop(random.randint(0, len(carta_dos) - 1))
-    carta_tres = random.choices(mazo)
-    #mazo.remove(carta_tres)
-    mazo.pop(random.randint(0, len(carta_tres) - 1))
 
-    mano_jugador = carta_uno, carta_dos, carta_tres
+    #mazo_lista: list[list[int, str]] = [list(tupla) for tupla in mazo]
+
+    print(f"MAZO: {mazo}")
+    print("CARTAS JUGADOR:")
+
+    carta_uno_jug = random.choices(mazo)
+    #print(carta_uno_jug)
+    #indice_carta_uno_jug = mazo.index(carta_uno_jug)
+    #mazo.pop(indice_carta_uno_jug)
+    
+    
+    #mano_jugador += carta_uno_jug
+    # Ejemplo: eliminar sublistas que cumplan una condición
+    
+    mazo = [sub for sub in mazo if sub != carta_uno_jug]   
+
+    carta_dos_jug = random.choices(mazo)
+    #indice_carta_dos_jug = mazo.index(carta_dos_jug)
+    #mazo.pop(indice_carta_dos_jug)
+
+    mazo = [sub for sub in mazo if sub != carta_dos_jug]   
+
+    
+
+    
+
+    carta_tres_jug = random.choices(mazo)
+    #indice_carta_tres_jug = mazo.index(carta_tres_jug)
+    #mazo.pop(indice_carta_tres_jug)
+    mazo = [sub for sub in mazo if sub != carta_tres_jug]   
+    
+
+    mano_jugador = [carta_uno_jug, carta_dos_jug, carta_tres_jug]
+    print(f"ESTAS SON LAS CARTAS DEL JUGADOR{mano_jugador}")
+    
 
     carta_uno_cpu = random.choices(mazo)
-    mazo.pop(random.randint(0, len(mazo) - 1))
-    #mazo.remove(carta_uno)
+    
+    #indice_carta_uno_cpu = mazo.index(carta_uno_cpu)
+    #mazo.pop(indice_carta_uno_cpu)
+    #print(carta_uno_cpu)
+
+    #mazo = mazo
+
+    mazo = [sub for sub in mazo if sub != carta_uno_cpu]   
+
     carta_dos_cpu = random.choices(mazo)
-    #mazo.remove(carta_dos)
-    mazo.pop(random.randint(0, len(mazo) - 1))
+    
+
+    #indice_carta_dos_cpu = mazo.index(carta_dos_cpu)
+    #mazo.pop(indice_carta_dos_cpu)
+
+    mazo = [sub for sub in mazo if sub != carta_dos_cpu] 
+    
     carta_tres_cpu = random.choices(mazo)
-    #mazo.remove(carta_tres)
-    mazo.pop(random.randint(0, len(mazo) - 1))
+    mazo = [sub for sub in mazo if sub != carta_tres_cpu] 
+    #indice_carta_tres_cpu = mazo.index(carta_tres_cpu)
+    #mazo.pop(indice_carta_tres_cpu)
+    
+    #mazo = mazo
     mano_cpu = carta_uno_cpu, carta_dos_cpu, carta_tres_cpu
-
-    print(mazo)
+    print(f"ESTAS SON LAS CARTAS DE LA CPU[{mano_cpu}]")
+    print(f"MAZO SIN LAS 6 CARTAS{mazo}")
     return mano_jugador, mano_cpu
+print(manos_cartas())
 
+"""
 mano_jugador, mano_cpu = manos_cartas()
-#print("Mano humano sin descomprimir",mano_jugador)
-#print("Mano cpu sin decomprimir",mano_cpu)
+
 lista_tuplas_jug = [tupla for lista in mano_jugador for tupla in lista]
 lista_tuplas_cpu = [tupla for lista in mano_cpu for tupla in lista]
-#print(lista_tuplas_jug)
-#print(lista_tuplas_cpu)
+
 
 def manos():
     
@@ -295,13 +335,19 @@ def manos():
     # CPU juega aleatoria
     carta_cpu = random.choice(mano_cpu)
     print("La computadora jugó:", carta_cpu[0], "de", carta_cpu[1])
-    mano_cpu.pop(random.randint(0, len(mano_cpu) - 1))
+    #mano_cpu.pop(random.randint(0, len(mano_cpu) - 1))
+    indice_carta_cpu = mano_cpu.index(carta_cpu)
+    mano_cpu.pop(indice_carta_cpu)
+    #mano_cpu.pop(carta_cpu)
 
     # jugador elige carta
     eleccion = int(input("Elige una carta (1-3): ")) - 1
     carta_jugador = mano_jugador[eleccion]
     print("Jugaste:", carta_jugador[0], "de", carta_jugador[1])
-    mano_jugador.pop(random.randint(0, len(mano_cpu) - 1))
+    #mano_jugador.pop(random.randint(0, len(mano_jugador) - 1))
+    indice_carta_jug = mano_jugador.index(carta_jugador)
+    mano_jugador.pop(indice_carta_jug)
+    #mano_jugador.pop(carta_jugador)
 
 
     return (carta_jugador, carta_cpu)
@@ -319,11 +365,11 @@ def jugar():
         # Comparar fuerza
         if fuerza(carta_jugador) > fuerza(carta_cpu):
             puntos_usuario += 1 
-            print("¡Ganaste la baza! ")
+            print(f"¡Ganaste la mano! Tu {carta_jugador} es mayor que el {carta_cpu} de la computadora")
             
         elif fuerza(carta_jugador) < fuerza(carta_cpu):
             puntos_cpu += 1
-            print("La computadora ganó la baza ")
+            print(f"¡La computadora ganó la mano! Su {carta_cpu} es mayor que tu {carta_jugador}")
             
         else:
             print("Empate ")
@@ -339,7 +385,7 @@ print("Vas sumando: ", puntos_usuario_total)
 print("La computadora va sumando: ", puntos_cpu_total)
 
 jugar()
-"""
+
 def main():
     queres_jugar = str(input("Queres jugar al truco? [s/n]: "))
     while(queres_jugar == "s"):
