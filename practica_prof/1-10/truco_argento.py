@@ -71,6 +71,7 @@ def mostrar_mano(mano):
     for i, (n,p) in enumerate(mano, 1):
         print(f"{i}. {n} de {p}")
 
+"""
 def manos_cartas():
     mazo = crear_mazo()
     random.shuffle(mazo) # MEzclamos el mazo aleatoriamente
@@ -178,7 +179,26 @@ def manos():
 
 
     return [carta_jugador, carta_cpu]
+"""
 
+def manos_cartas():
+    mazo = crear_mazo()
+
+    #repartimos 3 cartas al jugador
+    mano_jugador = [mazo.pop() for _ in range(3)]
+
+    # repartimos 3 cartas a la cpu
+    mano_cpu = [mazo.pop() for _ in range(3)]
+
+    print("Cartas del jugador:")
+    mostrar_mano(mano_jugador)
+    print("\nCartas de la CPU:")
+    mostrar_mano(mano_cpu)
+
+    print(f"\nMazo restante ({len(mazo)} cartas): {mazo}")
+
+
+    return mano_jugador, mano_cpu
 def jugar():
 
     puntos_usuario = 0
@@ -186,7 +206,7 @@ def jugar():
 
     
 
-    carta_jugador, carta_cpu = manos()
+    carta_jugador, carta_cpu = manos_cartas()
     
     while(carta_jugador and carta_cpu ):
         # Comparar fuerza
